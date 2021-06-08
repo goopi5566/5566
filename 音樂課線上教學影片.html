@@ -1,0 +1,105 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>音樂課線上教學影片</title>
+<style>
+        video {
+            max-width: 96%;
+          }
+      </style>
+<script type="text/javascript">
+var confirm_seconds=60;
+function end()
+{
+          if ($('#confirm_status').val()!='ok')
+     {
+       location.href="index.php?do=learnFail";
+     }else{
+       $('#submit_record').attr('disabled', 'disabled');
+       $('#submit_info').show();
+       document.lform.submit();
+     }
+            
+  /*
+  $.ajax({
+        type: "POST",
+        url: 'index.php?do=learnRec',
+        data: "id=7811&products_id=702&st=1623126742",
+        error: function(xhr) {
+          alert('Ajax request 發生錯誤');
+        },
+        success: function(response) {
+           //$('#message').html(response);
+        }
+      });
+  */
+}
+function showPoint()
+{
+    var options ={
+      autoOpen: false,
+      width: 300,
+      zIndex:9999,
+      modal: false
+    }; 
+    $("#content").html("請在"+confirm_seconds+"秒內，點選確認『繼續學習』按鈕，確保學習記錄。");
+      var dlg_2 = $('#dialog' ).dialog(options); 
+    dlg_2.dialog("open");
+    return false;
+}
+function checkPoint()
+{
+   //setTimeout("checkPointOk();", confirm_seconds*1000);
+   //showPoint();
+   $('#confirm_status').val('fail');
+   var d1 = new Date();
+   var s=d1.getTime();
+   alert("請在"+confirm_seconds+"秒內，點選提示畫面右下角按鈕，確保學習記錄。");
+   var d2 = new Date();
+   var e=d2.getTime();
+   var sec;
+   sec = e - s;
+   var c=confirm_seconds*1000;
+   //alert (s + "----" + e + "====" +sec + "::::" + c );
+   if (c >= sec)
+   {
+       confirmOk();
+   }
+   checkPointOk();
+}
+function confirmOk()
+{
+  $('#confirm_status').val('ok');
+  $("#dialog").dialog("close");
+  
+}
+function checkPointOk()
+{
+  if ($('#confirm_status').val()!='ok')
+     {
+       location.href="index.php?do=learnFail";
+     }
+}
+</script>
+      <body  onload='setTimeout("checkPoint();", *60*1000);'>
+      <center>
+<button onclick='end();' style="cursor:hand;cursor:pointer;" id="submit_record">學習結束，請點此按鈕，方可記錄學習時間。</button>
+<span id="submit_info" style="display:none"><font color="red">傳送中....</font></span><br>
+<font color="red">課程進行播放時會出現課程觀看確認對話框，未及時點選課程提示，須重新觀看課程，才會有學習記錄。</font>
+<form method="post" action="index.php?do=learnRec" name="lform">
+<input type="hidden" id="confirm_status" name="confirm_status" value="ok">
+<input type="hidden" name="id" value="7811">
+<input type="hidden" name="products_id" value="702">
+
+</form>
+</center>
+<div id="dialog" title="&nbsp;" style="display:none;" align="left">
+  <span id="title">
+  </span><br>
+  <div id="content">
+  </div><br>
+  <center><input type="button" value="繼續學習" onclick="confirmOk();"></center>
+</div>
+                <center><iframe src="https://www.youtube.com/embed/U-Sk_sxuryo" height="96%" width="100%" frameborder="0"></iframe></center>
+              <div align="center" id="message">
+</div>
+</body>
+  
